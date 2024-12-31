@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
 import colors from "@/constants/colors";
+import { Link } from "expo-router";
 
 export default function Login() {
   return (
@@ -10,31 +11,111 @@ export default function Login() {
         </Text>
         <Text style={styles.slogan}>Futuro da programação</Text>
       </View>
+      <View style={styles.form}>
 
-      <Text>Pagina Login </Text>
+        <View>
+            <Text style={styles.label}>Emal</Text>
+            <TextInput
+               placeholder="Digite seu email ..."
+               style={styles.input} 
+            />
+
+            <Text style={styles.label}>Senha</Text>
+            <TextInput
+               placeholder="Digite sua senha ..."
+               style={styles.input} 
+               secureTextEntry
+            />
+
+            <Pressable style={styles.button}>
+               <Text style={styles.buttonText}>Acessar</Text>
+            </Pressable>
+            <Link href='/(auth)/signup/page' style={styles.link}>
+              <Text> Ainda não tem conta ? cadastre-se </Text>
+            </Link>
+
+        </View>
+
+          
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+
+
+
   container: {
     flex: 1,
     paddingTop: 34,
     backgroundColor: colors.zinc,
-  },
+  }
+  ,
   header: {
     paddingLeft: 14,
     paddingRight: 14,
   },
+
   logoText: {
     fontSize: 20,
     fontWeight: "bold",
     color: colors.white,
     marginBottom: 8,
   },
+
   slogan: {
     fontSize: 34,
     color: colors.white,
     marginBottom: 34,
   },
+
+  form:{
+    flex:1,
+    backgroundColor:colors.white,
+    borderTopLeftRadius:16,
+    borderTopRightRadius:16,
+    paddingTop:24,
+    paddingLeft:14,
+    paddingRight:14,
+
+  },
+
+  label:{
+    color: colors.zinc,
+    marginBottom:4,
+  },
+
+  input:{
+    borderWidth:1,
+    borderColor: colors.gray,
+    borderRadius:8,
+    marginBottom:16,
+    paddingHorizontal:8,
+    paddingTop:14,
+    paddingBottom:14
+  },
+
+  buttonText:{
+     color: colors.zinc,
+     fontWeight:'bold',
+     textAlign:'center'
+  },
+  button:{
+    backgroundColor: colors.green,
+    paddingTop:14,
+    paddingBottom:14,
+    alignItems:'center',
+    justifyContent:'center',
+    width:'100%',
+    borderRadius:8
+  },
+  link:{
+    marginTop:16,
+    textAlign:'center'
+
+  }
+ 
+
+
 });
