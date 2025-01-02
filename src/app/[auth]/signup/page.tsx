@@ -7,10 +7,12 @@ import {
   Pressable,
   ScrollView,
   SafeAreaView,
+  Alert,
 } from "react-native";
 import colors from "@/constants/colors";
 import { Link, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { supabase } from "@/src/lib/supabase";
 
 export default function Signup() {
   //pegando os dados que o cliente digita
@@ -20,12 +22,27 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  function handleSignup() {
-    console.log({
-      name,
-      email,
-      password,
+  async function handleSignup() {
+    setLoading(true);
+
+    //função nativa do supabase
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          name: name,
+        },
+      },
     });
+
+    if (error) {
+      Alert.alert("Error", error.message);
+      setLoading(false);
+      return;
+    }
+    setLoading(false);
+    router.replace("/");
   }
 
   return (
@@ -70,7 +87,9 @@ export default function Signup() {
               />
 
               <Pressable style={styles.button} onPress={handleSignup}>
-                <Text style={styles.buttonText}>Cadastrar</Text>
+                <Text style={styles.buttonText}>
+                  {loading ? "Carregando" : "Cadastrar"}
+                </Text>
               </Pressable>
             </View>
           </View>
